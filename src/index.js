@@ -1,20 +1,13 @@
 const express = require("express");
-// const router = require("./router");
+const router = require("./router");
 
 const datasource = require("./db");
-const wildersController = require("./controllers/WildersController");
 
 const app = express();
 
 app.use(express.json());
 
-// app.use("/api", router);
-
-app.get("/api/wilder", wildersController.findAll);
-app.get("/api/wilder/:wilderId", wildersController.findOne);
-app.post("/api/wilder", wildersController.create);
-app.put("/api/wilder/:wilderId", wildersController.updateOne);
-app.delete("/api/wilder/:wilderId", wildersController.deleteOne);
+app.use("/api", router);
 
 const start = async () => {
   await datasource.initialize();
