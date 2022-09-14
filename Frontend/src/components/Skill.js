@@ -1,7 +1,11 @@
 export default function Skill({ name, level }) {
   return (
     <div>
-      Une Compétence {name} - {level}/5
+      <ul className="skills">
+        <li>
+          {name} <span className="votes"> {level}</span>
+        </li>
+      </ul>
     </div>
   );
 }

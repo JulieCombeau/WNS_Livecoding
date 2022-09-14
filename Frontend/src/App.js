@@ -1,23 +1,28 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Wilder from "./components/Wilder";
+import wildersList from "./wildersList"
 
 function App() {
-  const wilders = [
-    { id: 1, name: "jonh", skills: [{ id: 1, name: "Js", level: 4 }, { id: 2, name: "PHP", level: 3 }] },
-    { id: 2, name: "marc", skills: [{ id: 3, name: "Python", level: 4 }] },
-  ];
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        {wilders.map((wilder) => (
-          <Wilder key={wilder.id} name={wilder.name} skills={wilder.skills}/>
-        ))}
+    <div>
+      <header>
+        <div className="container">
+          <h1>Wilders Book</h1>
+        </div>
       </header>
+      <main className="container">
+        <h2>Wilders</h2>
+        <section className="card-row">
+          {wildersList.map((wilder) => (
+            <Wilder key={wilder.id} name={wilder.name} skills={wilder.skills} />
+          ))}
+        </section>
+      </main>
+      <footer>
+        <div className="container">
+          <p>&copy; 2022 Wild Code School</p>
+        </div>
+      </footer>
     </div>
   );
 }
