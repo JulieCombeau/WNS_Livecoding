@@ -39,12 +39,12 @@ module.exports = {
 
     const existingSkill = await datasource
       .getRepository(Skill)
-      .findBy({ name: req.body.name });
+      .findOneBy({ name: req.body.name });
 
     if (existingSkill)
       return res.status(409).send("a skill with this name already exists");
-    
-      try {
+
+    try {
       const skillCreated = await datasource.getRepository(Skill).save(req.body);
       return res.status(201).send(skillCreated);
     } catch (e) {
