@@ -15,9 +15,11 @@ export default function Wilder({ name, skills }) {
           aliquip ex ea commodo consequat.
         </p>
         <h4>Wild Skills</h4>
-        {skills.map((s) => (
-          <Skill key={s.id} name={s.name} level={s.level} />
-        ))}
+        <div className="skills">
+          {skills.map((s) => (
+            <Skill key={s.id} name={s.name} level={s.level} />
+          ))}
+        </div>
       </article>
     </div>
   );

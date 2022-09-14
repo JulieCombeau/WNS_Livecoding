@@ -113,7 +113,6 @@ footer {
   border: #F76C6C 1px solid;
   border-radius: 4px;
   padding: 2px;
-  min-width: 80px;
 }
  
 .card .skills .votes {
@@ -121,6 +120,7 @@ footer {
    align-items: center;
    display: flex;
    justify-content: center;
+   margin: 2px;
  
    /* Colors */
    background-color: rgba(0, 0, 0, .3);
