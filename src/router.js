@@ -22,5 +22,6 @@ router.delete("/skills/:skillId", skillsController.deleteOne);
 
 // Routes wilders_skills
 router.post("/wilders/:wilderId/skills/:skillId", wilderSkillControllers.create);
+router.delete("/wilders/:wilderId/skills/:skillId", wilderSkillControllers.delete);
 
 module.exports = router;

@@ -1,7 +1,3 @@
-const Skill = require("./Skill");
-
-const { ManyToMany } = require("typeorm");
-
 const EntitySchema = require("typeorm").EntitySchema;
 
 module.exports = new EntitySchema({
@@ -21,7 +17,7 @@ module.exports = new EntitySchema({
       target: "Skill",
       type: "many-to-many",
       joinTable: true,
-      cascade: true,
+      eager: true,
     }
   }
 });
