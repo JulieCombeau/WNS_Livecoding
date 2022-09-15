@@ -1,8 +1,17 @@
 import Skill from "./Skill";
 import picture from "../assets/picture.png";
+import { deleteWilder } from "../services/wilders";
 
-export default function Wilder({ name, skills }) {
-  console.log(skills);
+export default function Wilder({ name, skills = [], getWilderList, id }) {
+  const handleDeleteWilder = async () => {
+    try {
+      await deleteWilder(id);
+      getWilderList() 
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div>
       <article className="card">
@@ -20,6 +29,9 @@ export default function Wilder({ name, skills }) {
             <Skill key={s.id} name={s.name} level={s.level} />
           ))}
         </div>
+        <button type="button" onClick={handleDeleteWilder}>
+          Supprimer
+        </button>
       </article>
     </div>
   );

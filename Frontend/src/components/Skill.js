@@ -3,7 +3,8 @@ export default function Skill({ name, level }) {
     <div>
       <ul className="skills">
         <li>
-          {name} <span className="votes"> {level}</span>
+          {name}
+          {/* <span className="votes"> {level}</span> */}
         </li>
       </ul>
     </div>
