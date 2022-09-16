@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createWilder } from "../services/wilders";
+import { createWilder } from "../../services/wilders";
 
 export default function WilderForm({ getWilderList, setWilders }) {
   const [name, setName] = useState("");
