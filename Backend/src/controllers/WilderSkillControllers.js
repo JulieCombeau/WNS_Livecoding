@@ -4,8 +4,8 @@ const Skill = require("../entity/Skill");
 
 module.exports = {
   create: async (req, res) => {
-    const wilderId = req.params.wilderId;
-    const skillId = req.params.skillId;
+    const wilderId = parseInt(req.params.wilderId);
+    const skillId = parseInt(req.params.skillId);
     const wilder = await datasource.getRepository(Wilder).findOneBy({
       id: wilderId,
     });

@@ -115,7 +115,9 @@ footer {
   padding: 2px;
 }
  
-.card .skills .votes {
+.card .skills .votes,
+.card .skills .button_delete
+ {
    /* Center the content */
    align-items: center;
    display: flex;
@@ -127,6 +129,7 @@ footer {
    color: #FFF;
  
    /* Rounded border */
+   border: 0;
    border-radius: 9999px;
    height: 20px;
    width: 20px; 
