@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex,} from "@chakra-ui/react";
 import WilderCard from "./WilderCard";
 import WilderForm from "./WilderForm";
 import { getAllWilders } from "../../services/wilders";
@@ -24,18 +24,15 @@ export default function Wilder() {
   }, []);
 
   return (
-    <Flex flexDir="column" maxW="800px" m="auto" p="24px">
+    <Flex flexDir="column" maxW="900px" m="auto" p="24px" gap="10">
       <WilderForm getWilderList={getWilderList} setWilders={setWilders} />
-      <Text fontSize="3xl">Wilders</Text>
       <Flex w="fit-content" maxW="800px" flexWrap="wrap" gap="10px">
         {loadingWilders
           ? "Loading..."
           : wilders.map((wilder) => (
               <WilderCard
                 key={wilder.id}
-                name={wilder.name}
-                wilderId={wilder.id}
-                skills={wilder.skills}
+                wilder={wilder}
                 getWilderList={getWilderList}
               />
             ))}

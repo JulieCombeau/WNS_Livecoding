@@ -1,3 +1,4 @@
+import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { createWilder } from "../../services/wilders";
 
@@ -15,6 +16,7 @@ export default function WilderForm({ getWilderList, setWilders }) {
 
       // Méthode 2 : Mettre à jour le setWilders à chaque ajout de données sans refaire d'appel axios (sous-entend qu'il n'y a pas d'erreur lors de l'ajout)
       setWilders((oldList) => [...oldList, res.data]);
+      setName("")
     } catch (err) {
       console.error(err);
     } finally {
@@ -23,21 +25,23 @@ export default function WilderForm({ getWilderList, setWilders }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="name">
-        Nom :
-        <input
+    <>
+      <FormControl display="flex" w="fit-content" gap="5">
+        <FormLabel w="60%" alignSelf="center" m="0">Ajouter un Wilder</FormLabel>
+        <Input
           disabled={processing}
+          placeholder="Veuillez entrer votre nom"
           type="text"
           id="name"
+          value={name}
           onChange={(e) => {
             setName(e.target.value);
           }}
         />
-      </label>
-      <button type="submit" disabled={processing}>
+      <Button type="button" onClick={handleSubmit} disabled={processing} p="20px">
         Ajouter
-      </button>
-    </form>
+      </Button>
+      </FormControl>
+    </>
   );
 }

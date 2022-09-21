@@ -1,16 +1,24 @@
+import {
+  Flex,
+  Text,
+  Select,
+  UnorderedList,
+  ListItem,
+  Button,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { addSkill } from "../services/wilders";
 import { getAllSkills } from "../services/skills";
 import { deleteSkill } from "../services/wilders";
 
-export default function Skill({ skills = [], getWilderList, wilderId }) {
+export default function Skill({ getWilderList, wilder }) {
   const [skillsList, setSkillsList] = useState([]);
 
   const handleDeleteSkillToWilder = async (indexToRemove) => {
-    const skillId = skills.filter((_, index) => index === indexToRemove);
+    const skillId = wilder.skills.filter((_, index) => index === indexToRemove);
 
     try {
-      await deleteSkill(wilderId, skillId[0].id);
+      await deleteSkill(wilder.id, skillId[0].id);
       getWilderList();
     } catch (err) {
       console.error(err);
@@ -31,7 +39,7 @@ export default function Skill({ skills = [], getWilderList, wilderId }) {
 
   const addSkillToWilder = async (e) => {
     try {
-      await addSkill(wilderId, e.target.value);
+      await addSkill(wilder.id, e.target.value);
       getWilderList();
     } catch (err) {
       console.error(err);
@@ -39,34 +47,46 @@ export default function Skill({ skills = [], getWilderList, wilderId }) {
   };
 
   return (
-    <div>
-      <h4>Wild Skills</h4>
-      <label for="skill_select">Choose a skill:</label>
+    <Flex flexDir="column" gap="5">
+      <Text>Wild Skills</Text>
+      <Text for="skill_select" align="center">
+        Choose a skill
+      </Text>
 
-      <select name="skills" id="skill_select" onChange={addSkillToWilder}>
-        <option value="">--Please choose an option--</option>
+      <Select
+        size="sm"
+        name="skills"
+        id="skill_select"
+        onChange={addSkillToWilder}
+      >
+        <option value="">Please choose an option</option>
         {skillsList &&
           skillsList.map((skill) => (
             <option key={skill.id} value={skill.id}>
               {skill.name}
             </option>
           ))}
-      </select>
+      </Select>
 
-      {skills.map((s, index) => (
-        <ul className="skills">
-          <li>
-            {s.name}
-            <button
-              type="button"
-              className="button_delete"
-              onClick={() => handleDeleteSkillToWilder(index)}
-            >
-              X
-            </button>
-          </li>
-        </ul>
-      ))}
-    </div>
+      {wilder.skills &&
+        wilder.skills.map((s, index) => (
+          <UnorderedList className="skills">
+            <ListItem fontSize="lg">
+              {s.name}
+              <Button
+                size="xs"
+                ml="1rem"
+                borderRadius="full"
+                bgColor="rgba(0, 0, 0, .3)"
+                type="button"
+                className="button_delete"
+                onClick={() => handleDeleteSkillToWilder(index)}
+              >
+                X
+              </Button>
+            </ListItem>
+          </UnorderedList>
+        ))}
+    </Flex>
   );
 }
