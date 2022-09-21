@@ -90,13 +90,14 @@ const WilderController: IController = {
   },
 
   deleteOne: async (req, res) => {
-    const wilderId = parseInt(req.params.wilderId, 10);
+    const wilderId = parseInt(req.params.wilderId);
+    
     try {
       const wilderdeleted = await datasource
         .getRepository(Wilder)
         .delete(wilderId);
       if (wilderdeleted.affected === 0) {
-        res.status(404).send("Aucun wilder trouvé");
+        res.status(404).send("Aucun skill trouvé");
       } else {
         return res.status(200).send("Le wilder a été correctement supprimé");
       }

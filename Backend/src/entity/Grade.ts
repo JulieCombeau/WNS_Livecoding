@@ -16,9 +16,9 @@ wilderId: number
 @Column()
 skillId: number
 
-@ManyToOne(() => Wilder, (w) => w.grades)
+@ManyToOne(() => Wilder, (w) => w.grades, {onDelete: 'CASCADE'})
 wilder: Wilder;
 
-@ManyToOne(() => Skill, (s) => s.grades)
+@ManyToOne(() => Skill, (s) => s.grades, {onDelete: 'CASCADE'})
 skill: Skill;
 }
