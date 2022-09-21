@@ -1,8 +1,8 @@
-const express = require("express");
+import express from "express";
 
-const wildersController = require("./controllers/WildersController");
-const skillsController = require("./controllers/SkillsController");
-const wilderSkillControllers = require("./controllers/WilderSkillControllers");
+import wildersController from "./controllers/WildersController";
+import skillsController from "./controllers/SkillsController";
+import wilderSkillControllers from "./controllers/WilderSkillControllers";
 
 const router = express.Router();
 
@@ -24,4 +24,4 @@ router.delete("/skills/:skillId", skillsController.deleteOne);
 router.post("/wilders/:wilderId/skills/:skillId", wilderSkillControllers.create);
 router.delete("/wilders/:wilderId/skills/:skillId", wilderSkillControllers.delete);
 
-module.exports = router;
+export default router;

@@ -1,24 +1,27 @@
-const datasource = require("../db");
-const Wilder = require("../entity/Wilder");
-const Skill = require("../entity/Skill");
+import datasource from "../db";
+import { Wilder } from "../entity/Wilder";
+import { Skill } from "../entity/Skill";
+import { Grade } from "../entity/Grade";
+import { IController } from "../types/IController";
 
-module.exports = {
+
+const WilderSkillController: IController = {
   create: async (req, res) => {
     const wilderId = parseInt(req.params.wilderId);
     const skillId = parseInt(req.params.skillId);
+
     const wilder = await datasource.getRepository(Wilder).findOneBy({
       id: wilderId,
     });
-    if (!wilder) return res.status(404).send("Aucun wilder trouvé");
+    if (wilder === null) return res.status(404).send("Aucun wilder trouvé");
+    
     const skill = await datasource.getRepository(Skill).findOneBy({
       id: skillId,
     });
-    if (!skill) return res.status(404).send("Aucun skill trouvé");
-
+    if (skill === null) return res.status(404).send("Aucun skill trouvé");
+    
     try {
-      wilder.skills = [...wilder.skills, skill];
-
-      await datasource.getRepository(Wilder).save(wilder);
+      await datasource.getRepository(Grade).insert({wilder, skill});
       return res.status(201).send("Skill added to wilder");
     } catch (e) {
       console.error(e);
@@ -27,22 +30,23 @@ module.exports = {
         .json({ error: "Error while creating skill to wilder" });
     }
   },
+
   delete: async (req, res) => {
-    const wilderId = req.params.wilderId;
-    const skillId = req.params.skillId;
+    const wilderId = parseInt(req.params.wilderId);
+    const skillId = parseInt(req.params.skillId);
+
     const wilder = await datasource.getRepository(Wilder).findOneBy({
       id: wilderId,
     });
-    if (!wilder) return res.status(404).send("Aucun wilder trouvé");
+    if (wilder === null) return res.status(404).send("Aucun wilder trouvé");
+    
     const skill = await datasource.getRepository(Skill).findOneBy({
       id: skillId,
     });
-    if (!skill) return res.status(404).send("Aucun skill trouvé");
+    if (skill === null) return res.status(404).send("Aucun skill trouvé");
 
     try {
-      wilder.skills = wilder.skills.filter((e) => e.id !== skill.id);
-
-      await datasource.getRepository(Wilder).save(wilder);
+      await datasource.getRepository(Grade).delete({wilderId: wilder.id, skillId: skill.id});
       return res.status(201).send("Skill removed to wilder");
     } catch (e) {
       console.error(e);
@@ -52,3 +56,5 @@ module.exports = {
     }
   },
 };
+
+export default WilderSkillController;

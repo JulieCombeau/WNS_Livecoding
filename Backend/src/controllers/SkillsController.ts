@@ -1,11 +1,12 @@
-const datasource = require("../db");
-const Skill = require("../entity/Skill");
+import datasource from "../db";
+import { Skill } from "../entity/Skill";
+import { IController } from "../types/IController";
 
-module.exports = {
+const SkillController: IController = {
   findAll: async (req, res) => {
     try {
       const skills = await datasource.getRepository(Skill).find();
-      if (!skills) {
+      if (skills.length === 0) {
         return res.status(404).send(`There are no skills yet`);
       }
       return res.status(200).json(skills);
@@ -15,12 +16,12 @@ module.exports = {
   },
 
   findOne: async (req, res) => {
-    const skillId = req.params.skillId;
+    const skillId = parseInt(req.params.skillId);
     try {
       const skill = await datasource.getRepository(Skill).findOneBy({
         id: skillId,
       });
-      if (!skill) {
+      if (skill === null) {
         res.status(404).send("Aucun skill trouvé");
       } else {
         return res.status(200).send(skill);
@@ -40,8 +41,8 @@ module.exports = {
     const existingSkill = await datasource
       .getRepository(Skill)
       .findOneBy({ name: req.body.name });
-
-    if (existingSkill)
+      
+    if (existingSkill !== null)
       return res.status(409).send("a skill with this name already exists");
 
     try {
@@ -54,7 +55,7 @@ module.exports = {
   },
 
   updateOne: async (req, res) => {
-    const skillId = req.params.skillId;
+    const skillId = parseInt(req.params.skillId);
     if (req.body.name.length > 100 || req.body.name.length === 0)
       return res
         .status(422)
@@ -77,7 +78,7 @@ module.exports = {
   },
 
   deleteOne: async (req, res) => {
-    const skillId = req.params.skillId;
+    const skillId = parseInt(req.params.skillId);
     try {
       const skilldeleted = await datasource
         .getRepository(Skill)
@@ -95,3 +96,5 @@ module.exports = {
     }
   },
 };
+
+export default SkillController;

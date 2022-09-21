@@ -1,29 +1,48 @@
-const datasource = require("../db");
-const Wilder = require("../entity/Wilder");
+import datasource  from "../db";
+import { Wilder } from "../entity/Wilder";
+import { IController } from "../types/IController";
 
-module.exports = {
+const WilderController: IController = {
   findAll: async (req, res) => {
     try {
-      const wilders = await datasource.getRepository(Wilder).find();
-      if (!wilders) {
+      const wilders = await datasource.getRepository(Wilder).find({relations: { grades: { skill: true }}});
+      if (wilders.length === 0) {
         return res.status(404).send(`There are no wilders yet`);
       }
-      return res.status(200).json(wilders);
+      return res.status(200).json(wilders.map((w)=>({
+        ...w,
+        grades: undefined,
+        skills: w.grades.map((g) => ({
+          id: g.skill.id,
+          name: g.skill.name,
+          votes: g.votes
+        }))
+      })));
+      
     } catch (e) {
       return res.status(500).json({ error: "Problème de lecture des wilders" });
     }
   },
 
   findOne: async (req, res) => {
-    const wilderId = req.params.wilderId;
+    const wilderId = parseInt(req.params.wilderId, 10);
     try {
-      const wilder = await datasource.getRepository(Wilder).findOneBy({
-        id: wilderId,
+      const wilder = await datasource.getRepository(Wilder).find({
+       where: { id: wilderId },
+       relations: { grades: { skill: true }}
       });
-      if (!wilder) {
+      if (wilder === null) {
         res.status(404).send("Aucun wilder trouvé");
       } else {
-        return res.status(200).send(wilder);
+         return res.status(200).send(wilder.map((w)=>({
+          ...w,
+          grades: undefined,
+          skills: w.grades.map((g) => ({
+            id: g.skill.id,
+            name: g.skill.name,
+            votes: g.votes
+          }))
+        })));
       }
     } catch (e) {
       console.error(e);
@@ -48,7 +67,7 @@ module.exports = {
   },
 
   updateOne: async (req, res) => {
-    const wilderId = req.params.wilderId;
+    const wilderId = parseInt(req.params.wilderId, 10);
     if (req.body.name.length > 100 || req.body.name.length === 0)
     return res
       .status(422)
@@ -71,7 +90,7 @@ module.exports = {
   },
 
   deleteOne: async (req, res) => {
-    const wilderId = req.params.wilderId;
+    const wilderId = parseInt(req.params.wilderId, 10);
     try {
       const wilderdeleted = await datasource
         .getRepository(Wilder)
@@ -89,3 +108,5 @@ module.exports = {
     }
   },
 };
+
+export default WilderController;
