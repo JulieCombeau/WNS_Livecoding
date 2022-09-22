@@ -1,9 +1,10 @@
 import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
 import { createWilder } from "../../services/wilders";
-import { IWilderInput } from "../../types/IWilders";
+import { IWilderInput, IWilderListRefresh } from "../../types/IWilders";
 
-export default function WilderForm() {
+
+export default function WilderForm({ getWilderList }: IWilderListRefresh) {
 
   const [name, setName] = useState<IWilderInput["name"]>("");
   const [processing, setProcessing] = useState(false);
@@ -12,12 +13,8 @@ export default function WilderForm() {
     e.preventDefault();
     setProcessing(true);
     try {
-      const res = await createWilder({ name });
-      /* Methode 1 : relancer la fonction qui recupère tout les wilders :
-        getWilderList() */
-
-      // Méthode 2 : Mettre à jour le setWilders à chaque ajout de données sans refaire d'appel axios (sous-entend qu'il n'y a pas d'erreur lors de l'ajout)
-    //   setWilders((oldList) => [...oldList, res.data]);
+      await createWilder({ name });
+        getWilderList();
       setName("")
     } catch (err) {
       console.error(err);

@@ -1,6 +1,6 @@
 import { Flex,} from "@chakra-ui/react";
 import WilderCard from "./WilderCard";
-// import WilderForm from "./WilderForm";
+import WilderForm from "./WilderForm";
 import { getAllWilders } from "../../services/wilders";
 import {  useEffect, useState } from "react";
 import { IWilder } from "../../types/IWilders";
@@ -27,7 +27,7 @@ export default function Wilder() {
 
   return (
     <Flex flexDir="column" maxW="900px" m="auto" p="24px" gap="10">
-      {/* <WilderForm setWilders={setWilders} /> */}
+      <WilderForm getWilderList={getWilderList} />
       <Flex w="fit-content" maxW="800px" flexWrap="wrap" gap="10px">
         {loadingWilders
           ? "Loading..."

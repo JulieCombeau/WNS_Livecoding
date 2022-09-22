@@ -2,10 +2,11 @@ import Skill from "../Skill";
 import picture from "../../assets/picture.png";
 import { Flex, Image, Text, Button } from "@chakra-ui/react";
 import { deleteWilder } from "../../services/wilders";
-import { IWilderList } from "../../types/IWilders";
+import { WilderProps } from "../../types/IWilders";
 
 
-export default function WilderCard({ getWilderList, wilder }: IWilderList) {
+
+export default function WilderCard({ getWilderList, wilder }: WilderProps) {
     
   const handleDeleteWilder = async () => {
     try {

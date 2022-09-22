@@ -17,14 +17,14 @@ export interface IWilderInput {
     name: string
 }
 
-export interface IWilderList {
-    getWilderList: () => Promise<void>
+export interface IWilderListRefresh {
+    getWilderList: () => void
+}
+
+export interface WilderProps {
+    getWilderList: () => void
     wilder: IWilder
 }
 
-// export interface IWilderListAndSet {
-//     getWilderList: () => Promise<void>
-//     setWilders: 
-// }
 
 

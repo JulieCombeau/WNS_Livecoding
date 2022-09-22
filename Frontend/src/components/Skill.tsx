@@ -11,9 +11,9 @@ import { addSkill } from "../services/wilders";
 import { getAllSkills } from "../services/skills";
 import { deleteSkill } from "../services/wilders";
 import { ISkill } from "../types/ISkills";
-import { IWilderList, SkillOfWilder } from "../types/IWilders";
+import {  SkillOfWilder, WilderProps } from "../types/IWilders";
 
-export default function Skill({ getWilderList, wilder }: IWilderList) {
+export default function Skill({ getWilderList, wilder }: WilderProps) {
   const [skillsList, setSkillsList] = useState<ISkill[]>([]);
 
   const handleDeleteSkillToWilder = async (indexToRemove: number) => {

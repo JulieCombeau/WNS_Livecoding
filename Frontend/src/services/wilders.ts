@@ -1,7 +1,7 @@
-import { IWilderInput} from "../types/IWilders";
+import { IWilder, IWilderInput} from "../types/IWilders";
 import API from "./APIClient";
 
-export async function getAllWilders() {
+export async function getAllWilders(): Promise<IWilder[]> {
   const { data } = await API.get("/wilders");
   return data;
 }
