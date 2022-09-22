@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react"
 
 export interface SkillOfWilder {
     id: number
@@ -13,6 +14,10 @@ export interface IWilder {
     skills: SkillOfWilder[]
 }
 
+export interface OneWilder {
+    wilder: IWilder
+}
+
 export interface IWilderInput {
     name: string
 }
@@ -26,5 +31,9 @@ export interface WilderProps {
     wilder: IWilder
 }
 
+export interface WildersContextType {
+    wilders: IWilder[]
+    setWilders: Dispatch<SetStateAction<IWilder[]>>
+}
 
 

@@ -35,7 +35,6 @@ export default function Wilder() {
               <WilderCard
                 key={wilder.id}
                 wilder={wilder}
-                getWilderList={getWilderList}
               />
             ))}
       </Flex>

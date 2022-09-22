@@ -25,7 +25,7 @@ export default function WilderForm({ getWilderList }: IWilderListRefresh) {
 
   return (
     <>
-      <FormControl display="flex" w="fit-content" gap="5">
+      <FormControl display="flex" w="fit-content" gap="5" alignSelf="center">
         <FormLabel w="60%" alignSelf="center" m="0">Ajouter un Wilder</FormLabel>
         <Input
           disabled={processing}

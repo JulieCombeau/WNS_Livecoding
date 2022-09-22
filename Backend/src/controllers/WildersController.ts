@@ -42,7 +42,7 @@ const WilderController: IController = {
             name: g.skill.name,
             votes: g.votes
           }))
-        })));
+      })));
       }
     } catch (e) {
       console.error(e);

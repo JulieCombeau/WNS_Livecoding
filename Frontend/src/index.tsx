@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import * as serviceWorker from "./serviceWorker"
+import CurrentWildersContext from "./contexts/WildersContext";
 
 
 const container = document.getElementById("root")
@@ -17,9 +18,11 @@ root.render(
   <React.StrictMode>
     {/* <ColorModeScript /> */}
     <BrowserRouter>
+    <CurrentWildersContext>
       <ChakraProvider>
         <App />
       </ChakraProvider>
+    </CurrentWildersContext>
     </BrowserRouter>
   </React.StrictMode>,
 )

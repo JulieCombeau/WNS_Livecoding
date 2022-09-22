@@ -2,30 +2,16 @@ import {
   Flex,
   Text,
   Select,
-  UnorderedList,
-  ListItem,
-  Button,
+
 } from "@chakra-ui/react";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { addSkill } from "../services/wilders";
 import { getAllSkills } from "../services/skills";
-import { deleteSkill } from "../services/wilders";
 import { ISkill } from "../types/ISkills";
-import {  SkillOfWilder, WilderProps } from "../types/IWilders";
+import { OneWilder } from "../types/IWilders";
 
-export default function Skill({ getWilderList, wilder }: WilderProps) {
+export default function Skill({ wilder }: OneWilder) {
   const [skillsList, setSkillsList] = useState<ISkill[]>([]);
-
-  const handleDeleteSkillToWilder = async (indexToRemove: number) => {
-    const skillId = wilder.skills.filter((_, index: number) => index === indexToRemove);
-
-    try {
-      await deleteSkill(wilder.id, skillId[0].id);
-      getWilderList();
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const getSkillList = async () => {
     try {
@@ -42,7 +28,6 @@ export default function Skill({ getWilderList, wilder }: WilderProps) {
   const addSkillToWilder: ChangeEventHandler<HTMLSelectElement> = async (e) => {
     try {
       await addSkill(wilder.id, parseInt(e.target.value));
-      getWilderList();
     } catch (err) {
       console.error(err);
     }
@@ -50,13 +35,12 @@ export default function Skill({ getWilderList, wilder }: WilderProps) {
 
   return (
     <Flex flexDir="column" gap="5">
-      <Text>Wild Skills</Text>
-      <Text align="center">
+      <Text align="center" fontSize="2xl">
         Choose a skill
       </Text>
 
       <Select
-        size="sm"
+        size="md"
         name="skills"
         id="skill_select"
         onChange={addSkillToWilder}
@@ -69,26 +53,6 @@ export default function Skill({ getWilderList, wilder }: WilderProps) {
             </option>
           ))}
       </Select>
-
-      {wilder.skills &&
-        wilder.skills.map((s: SkillOfWilder, index: number) => (
-          <UnorderedList className="skills">
-            <ListItem fontSize="lg">
-              {s.name}
-              <Button
-                size="xs"
-                ml="1rem"
-                borderRadius="full"
-                bgColor="rgba(0, 0, 0, .3)"
-                type="button"
-                className="button_delete"
-                onClick={() => handleDeleteSkillToWilder(index)}
-              >
-                X
-              </Button>
-            </ListItem>
-          </UnorderedList>
-        ))}
     </Flex>
   );
 }

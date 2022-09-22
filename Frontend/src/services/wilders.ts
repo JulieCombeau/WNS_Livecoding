@@ -1,8 +1,13 @@
-import { IWilder, IWilderInput} from "../types/IWilders";
+import { IWilder, IWilderInput, OneWilder} from "../types/IWilders";
 import API from "./APIClient";
 
 export async function getAllWilders(): Promise<IWilder[]> {
   const { data } = await API.get("/wilders");
+  return data;
+}
+
+export async function getOneWilder(wilderId: number): Promise<IWilder[]> {
+  const { data } = await API.get(`/wilders/${wilderId}`);
   return data;
 }
 
