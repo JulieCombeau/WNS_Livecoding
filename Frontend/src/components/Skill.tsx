@@ -36,7 +36,7 @@ export default function Skill({ wilder }: OneWilder) {
   return (
     <Flex flexDir="column" gap="5">
       <Text align="center" fontSize="2xl">
-        Choose a skill
+        Skills
       </Text>
 
       <Select

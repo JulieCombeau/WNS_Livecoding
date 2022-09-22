@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { IWilder } from "../types/IWilders";
 import { getOneWilder } from "../services/wilders";
 import { useParams } from "react-router-dom";
-import WildersSkills from "../components/Wilders/WildersSkills";
+import WildersSkills from "../components/Wilders/WildersCollapse";
 
 export default function WilderDetails() {
   const { wilderId } = useParams();
