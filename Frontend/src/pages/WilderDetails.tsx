@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WilderCardDetails from "../components/Wilders/WilderCardDetails";
@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { IWilder } from "../types/IWilders";
 import { getOneWilder } from "../services/wilders";
 import { useParams } from "react-router-dom";
-import WildersSkills from "../components/Wilders/WildersCollapse";
+
 
 export default function WilderDetails() {
   const { wilderId } = useParams();
@@ -29,8 +29,9 @@ export default function WilderDetails() {
   return (
     <Box>
       <Header />
-      <WilderCardDetails wilder={wilder[0]} />
-      <WildersSkills wilder={wilder[0]}/>
+      <Flex flexDir="column" m="1rem" gap="2">
+        <WilderCardDetails wilder={wilder[0]} />
+      </Flex>
       <Footer />
     </Box>
   );

@@ -36,4 +36,9 @@ export interface WildersContextType {
     setWilders: Dispatch<SetStateAction<IWilder[]>>
 }
 
-
+export interface wilderModal {
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+    wilder: IWilder;
+  }

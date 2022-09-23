@@ -1,11 +1,12 @@
 import { FormControl, FormLabel, Input, Flex, Textarea } from "@chakra-ui/react";
+// import {  useState } from "react";
 // import { FormEvent, useState } from "react";
 // import { createWilder } from "../../services/wilders";
-// import { IWilderInput } from "../../types/IWilders";
+import { OneWilder } from "../../types/IWilders";
 
-export default function WilderInfo() {
-  //   const [name, setName] = useState<IWilderInput["name"]>("");
-  //   const [processing, setProcessing] = useState(false);
+export default function WilderInfo({ wilder }: OneWilder) {
+    // const [name, setName] = useState<IWilderInput["name"]>("");
+
 
   //   const handleSubmit = async (e: FormEvent) => {
   //     e.preventDefault();
