@@ -12,21 +12,19 @@ interface WilderProps {
   setWilders: Dispatch<SetStateAction<IWilder[]>>;
 }
 
-
 const Wilder = ({
   wilder: { id, name, skills = [], avatarUrl },
   setWilders,
 }: WilderProps) => {
-
   const [deleteWilder] = useMutation(DELETE_WILDER, {
-    refetchQueries: [{ query: GET_WILDERS}]
+    refetchQueries: [{ query: GET_WILDERS }],
   });
 
   const handleDelete = async () => {
     if (window.confirm("are you sure ?"))
       try {
         setWilders((oldList) => oldList.filter((wilder) => wilder.id !== id));
-        await deleteWilder({variables :{id : id.toString()}});
+        await deleteWilder({ variables: { id: id.toString() } });
       } catch (err) {
         console.error(err);
       }
@@ -46,7 +44,7 @@ const Wilder = ({
           <div className="flex flex-col">
             <Link to={`/wilders/${id}`}>
               <h3 className="font-semibold">
-                {name[0].toUpperCase() + name.split("").splice(1).join("")}
+                {name[0]?.toUpperCase() + name.split("").splice(1).join("")}
               </h3>
             </Link>
 

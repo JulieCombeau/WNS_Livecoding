@@ -11,9 +11,9 @@ RUN npm i -g pnpm
 RUN pnpm i
 
 COPY tsconfig.json .
-COPY src ./src
-COPY public ./public
 COPY *.config.* .
+COPY src src
+COPY public public
 
 CMD npm start
 
