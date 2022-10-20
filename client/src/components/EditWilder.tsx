@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { IWilderInput } from "../types/IWilder";
 import blank_profile from "../assets/avatar.png";
-import { getOneWilder, updateWilder } from "../services/wilders";
+import { getOneWilder, GET_WILDERS, UPDATE_WILDER } from "../services/wilders";
 import toast from "react-hot-toast";
 import { ISkill } from "../types/ISkill";
 import { createSkill, getAllSkills } from "../services/skills";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "./Loader";
 import CreatableSelect from "react-select/creatable";
+import { useMutation } from "@apollo/client";
 
 export default function EditWilder() {
   const { id } = useParams();
@@ -24,18 +25,35 @@ export default function EditWilder() {
     getAllSkills().then(setSkills).catch(console.error);
   }, []);
 
+  const [updateWilder] = useMutation(UPDATE_WILDER, {
+    refetchQueries: [{ query: GET_WILDERS}]
+  });
+
   if (!editedWilder || !id) return <Loader />;
 
+  const { skills, name, bio, avatarUrl, city } = editedWilder;
+
   const save = () =>
-    updateWilder(parseInt(id, 10), editedWilder)
-      .then(() => {
+    updateWilder({
+      variables: {
+        id,
+        data: {
+          skills: skills?.map((s) => ({ id: s.id })),
+          name,
+          bio,
+          avatarUrl,
+          city,
+        },
+      },
+      onCompleted: () => {
         toast.success("Wilder saved");
         navigate(`/wilders/${id}`);
-      })
-      .catch((err) => {
+      },
+      onError: (err) => {
         console.error(err);
         toast.error("error while saving wilder");
-      });
+      },
+    });
 
   return (
     <div className="flex flex-col items-center p-4 pt-10 mb-48">
