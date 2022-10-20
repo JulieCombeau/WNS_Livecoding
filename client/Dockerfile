@@ -12,6 +12,7 @@ RUN pnpm i
 
 COPY tsconfig.json .
 COPY *.config.* .
+COPY codegen.yml .
 COPY src src
 COPY public public
 
