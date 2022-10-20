@@ -1,0 +1,14 @@
+mutation CreateWilder($data: WilderInput!) {
+  createWilder(data: $data) {
+    id
+    name
+    city
+    avatarUrl
+    bio
+    skills {
+      id
+      name
+      votes
+    }
+  }
+}

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { IWilderInput } from "../types/IWilder";
 import blank_profile from "../assets/avatar.png";
-import { getOneWilder, GET_WILDERS, UPDATE_WILDER } from "../services/wilders";
+import { getOneWilder } from "../services/wilders";
 import toast from "react-hot-toast";
 import { ISkill } from "../types/ISkill";
 import { createSkill, getAllSkills } from "../services/skills";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "./Loader";
 import CreatableSelect from "react-select/creatable";
-import { useMutation } from "@apollo/client";
+import {
+  useUpdateWilderMutation,
+  WildersDocument,
+} from "../graphql/generated/schema";
 
 export default function EditWilder() {
   const { id } = useParams();
@@ -25,8 +28,8 @@ export default function EditWilder() {
     getAllSkills().then(setSkills).catch(console.error);
   }, []);
 
-  const [updateWilder] = useMutation(UPDATE_WILDER, {
-    refetchQueries: [{ query: GET_WILDERS}]
+  const [updateWilder] = useUpdateWilderMutation({
+    refetchQueries: [{ query: WildersDocument }],
   });
 
   if (!editedWilder || !id) return <Loader />;
@@ -36,7 +39,7 @@ export default function EditWilder() {
   const save = () =>
     updateWilder({
       variables: {
-        id,
+        updateWilderId : id,
         data: {
           skills: skills?.map((s) => ({ id: s.id })),
           name,

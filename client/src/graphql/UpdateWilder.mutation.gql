@@ -1,0 +1,14 @@
+mutation UpdateWilder($data: WilderInput!, $updateWilderId: String!) {
+  updateWilder(data: $data, id: $updateWilderId) {
+    id
+    name
+    city
+    avatarUrl
+    bio
+    skills {
+      id
+      name
+      votes
+    }
+  }
+}

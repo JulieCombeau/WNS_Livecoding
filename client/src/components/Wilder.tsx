@@ -1,11 +1,14 @@
 import React from "react";
 import blank_profile from "../assets/avatar.png";
-import { DELETE_WILDER, GET_WILDERS } from "../services/wilders";
 import Skill from "./Skill";
 import { IWilder } from "../types/IWilder";
 import { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+
+import {
+  useDeleteWilderMutation,
+  WildersDocument,
+} from "../graphql/generated/schema";
 
 interface WilderProps {
   wilder: IWilder;
@@ -16,15 +19,15 @@ const Wilder = ({
   wilder: { id, name, skills = [], avatarUrl },
   setWilders,
 }: WilderProps) => {
-  const [deleteWilder] = useMutation(DELETE_WILDER, {
-    refetchQueries: [{ query: GET_WILDERS }],
+  const [deleteWilder] = useDeleteWilderMutation({
+    refetchQueries: [{ query: WildersDocument }],
   });
 
   const handleDelete = async () => {
     if (window.confirm("are you sure ?"))
       try {
         setWilders((oldList) => oldList.filter((wilder) => wilder.id !== id));
-        await deleteWilder({ variables: { id: id.toString() } });
+        await deleteWilder({ variables: { deleteWilderId: id.toString() } });
       } catch (err) {
         console.error(err);
       }
