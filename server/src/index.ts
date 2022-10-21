@@ -7,6 +7,7 @@ import datasource from "./db";
 import { ApolloServerPluginLandingPageLocalDefault } from "apollo-server-core";
 import { buildSchema } from "type-graphql";
 import { WildersResolver } from "./resolvers/WildersResolver";
+import { SkillsResolvers } from "./resolvers/SkillsResolvers";
 
 const app = express();
 
@@ -31,7 +32,7 @@ const start = async (): Promise<void> => {
   await datasource.initialize();
 
   const schema = await buildSchema({
-    resolvers : [WildersResolver]
+    resolvers : [WildersResolver, SkillsResolvers]
   })
 
   const server = new ApolloServer({
